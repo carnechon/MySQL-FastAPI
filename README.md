@@ -6,9 +6,8 @@ Este es mi ultimo proyecto del curso escolar en el cual he desarrollado con Pyth
 
 Librerias que he utilizado.
 -anyio
--aiomysql
--fastapi
+-aiomysql - Para poder utilizar la conexion asincrona a la BD en database.py y definir errores.
+-fastapi - Para poder utilizar el decorador @app.
 -uvicorn
--requests
-
-
+-requests - Para poder realizar las peticiones a la BD.
+-typing - Para poder devolver None en caso de que no se encuentre la varible, esto es util al utilizar el mismo codgio para varias cosas diferentes.
