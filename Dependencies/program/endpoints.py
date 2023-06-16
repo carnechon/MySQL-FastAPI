@@ -1,11 +1,3 @@
-# requests - Para poder realizar las peticiones a la BD.
-# aiomysql - Para poder utilizar la conexion asincrona a la BD en database.py y definir errores.
-# typing.Optional - Para poder devolver None en caso de que no se encuentre la varible, esto es util al utilizar el mismo codgio para varias cosas diferentes.
-# FastAPI - Para poder utilizar el decorador @app.
-# fastapi.responses.JSONResponse - Para poder devolver un error 500 en caso de que no se pueda realizar la peticion a la BD.
-# objetos.City - Donde se define la estructura de la BD para mayor claridad.
-# metodos.Repositorio - Donde se definen los metodos que permiten interactuar con la BD.
-# database.get_database - Donde se define la conexion a la BD.
 import aiomysql
 from typing import Optional
 from fastapi import FastAPI, status, Response, HTTPException
