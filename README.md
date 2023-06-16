@@ -11,3 +11,4 @@ Librerias que he utilizado.
 -uvicorn
 -requests - Para poder realizar las peticiones a la BD.
 -typing - Para poder devolver None en caso de que no se encuentre la varible, esto es util al utilizar el mismo codgio para varias cosas diferentes.
+-os - 
