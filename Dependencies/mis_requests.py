@@ -3,15 +3,15 @@ import requests
 def menu():
     while True:
         print()
-        print("1. GET (Mostrar la tabla completa.)") #FUNCIONA
-        print("2. POST (Añadir una ciudad.)") #FUNCIONA
-        print("3. PUT (Modificar una ciudad.)") #FUNCIONA
-        print("4. DELETE (Borrar una ciudad.)") #FUNCIONA
-        print("5. EXIT") #FUNCIONA
+        print("1. GET (Mostrar la tabla completa.)")
+        print("2. POST (Añadir una ciudad.)")
+        print("3. PUT (Modificar una ciudad.)")
+        print("4. DELETE (Borrar una ciudad.)")
+        print("5. EXIT")
         opcion = int(input("Ingrese una opcion: "))
 
         if opcion == 1:
-            Endpoints.get()
+            Endpoints.get() #_cc
         elif opcion == 2:
             Endpoints.post()
         elif opcion == 3:
@@ -33,36 +33,24 @@ class Endpoints:
         # Si el ID ingresado no es un número, se asigna None
         except ValueError:
             id = None
-
-        # URL del servidor FastAPI
-        url_base = "http://localhost:8050/city"
-
+        url_base = "http://localhost:8000/city"
         # Construye la URL según el ID ingresado
         url = f"{url_base}/{id}" if id else url_base
-
-        # Realizar la solicitud GET
         response = requests.get(url)
-
-        # Mostrar el contenido de la respuesta
         print(response.content)
-
         # Mostrar el código de estado de la respuesta
         print(f"\n Codigo: \033[92m{response.status_code}\033[0m")
 
+    # Peticion de busqueda con el parametro countrycode.
     def get_cc(countrycode=None):
-        url = "http://localhost:8050/city"
-        # Realizar la solicitud GET
+        url = "http://localhost:8000/city"
         response = requests.get(url, params={"countrycode":"ESP"})
-
-        # Mostrar el contenido de la respuesta
         print(response.content)
-
         # Mostrar el código de estado de la respuesta
         print(f"\n Codigo: \033[92m{response.status_code}\033[0m")
         
     def post():
-        # URL del servidor FastAPI
-        url = "http://localhost:8050/city"
+        url = "http://localhost:8000/city"
 
         # Datos de la ciudad a enviar en la solicitud POST
         city_info = {
@@ -97,8 +85,7 @@ class Endpoints:
 
 
     def put():#Por algun bug, a veces se duplica la peticion.
-        # URL del servidor FastAPI
-        url = "http://localhost:8050/city"
+        url = "http://localhost:8000/city"
 
         # Datos de la ciudad a enviar en la solicitud POST
         city_info = {
@@ -132,8 +119,7 @@ class Endpoints:
                 print("Error response:", response.content)  
 
     def delete():
-        # URL del servidor FastAPI
-        url = "http://localhost:8050/city"
+        url = "http://localhost:8000/city"
 
         # Datos de la ciudad a enviar en la solicitud POST
         city_info = {
