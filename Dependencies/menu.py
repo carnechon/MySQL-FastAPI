@@ -23,7 +23,7 @@ def startup_event():
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
     
-#cd C:\VSC-TRABAJOS\HLC-CGonfaus\Practicas_obligatorias\Python_fastAPI-SQL\fast-api-sample\src & python .\menu.py
+#cd ./Dependencies & python .\menu.py
 
 # http://localhost:8000/ - peticion web
 # curl -X GET http://localhost:8000/ - peticion a terminal por consola.
