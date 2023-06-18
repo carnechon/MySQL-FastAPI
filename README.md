@@ -26,6 +26,8 @@ Modifications that can be made to adapt the API to other tables.
 ## Problems
 Some problems you may encounter during server execution or with FastAPI requests.
 
+
+
 ## Descripcion en Español
 Este es mi ultimo proyecto del curso escolar en el cual he desarrollado con Python una API con el marco de trabajo FastAPI con una base de datos genérica de MySQL como modelo base para el funcionamiento del código, este código actualmente solo recoge las funciones GET, PUSH, PUT, DELETE para una única tabla, se podría desarrollar para poder ver y mostrar otras tablas, pero con esto es suficiente para poder mostrar y utilizar la mayoría de opciones que permite esta herramienta para este uso. Además la base de datos es asíncrona, por lo que puede esperar un tiempo a las peticiones del servidor.
 
