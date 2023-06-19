@@ -16,7 +16,7 @@ def health_check():
 @app.on_event("startup")
 def startup_event():
     os.system('cls' if os.name == 'nt' else 'clear') # Limpia la consola una vez y corrige un bug al mostrar las peticiones en W10 con PS7.
-    print("Hola mundo - TEST FastAPI")
+    print("TEST FastAPI")
 
 
 
