@@ -49,6 +49,7 @@ url = "http://localhost:8000/city"
 ```
 
 This can also be done using cURL.
+You can modify the example values that are not enclosed in "" quotes for each request.
 ```
 > curl get http://localhost:8000/city ...city
 > curl -X POST -H "Content-Type: application/json" -d '{"id": 4080, "name": "City Name", "countryCode": "USA", "district": "LosAlamos", "population": 1000}' http://localhost:8000/city
@@ -57,11 +58,12 @@ This can also be done using cURL.
 ```
 
 Or just from the browser.
+```
 http://localhost:8000/docs
 http://localhost:8000/city
 http://localhost:8000/city/6
 http://localhost:8000/city/countrycode=USA
-
+```
 
 ## Problems
 Some problems you may encounter during server execution or with FastAPI requests.
@@ -111,6 +113,7 @@ url = "http://localhost:8000/city"
 ```
 
 Tambien se pueden hacer utilizando cURL.
+Puedes modificar los valores de ejemplo que no estan entre "" comillas de cada peticion.
 ```
 > curl get http://localhost:8000/city
 > curl -X POST -H "Content-Type: application/json" -d '{"id": 4080, "name": "City Name", "countryCode": "USA", "district": "LosAlamos", "population": 1000}' http://localhost:8000/city
@@ -119,10 +122,12 @@ Tambien se pueden hacer utilizando cURL.
 ```
 
 O simplemete desde el navegador.
+```
 http://localhost:8000/docs
 http://localhost:8000/city
 http://localhost:8000/city/6
 http://localhost:8000/city/countrycode=USA
+```
 
 ### Funcionamiento de la API
 
