@@ -23,10 +23,10 @@ A simple explanation of how to use it with the MySQL "World" example database.
 
 For the program to work you need to go to ./program/database.py, from line 12 to 15.
 ```
-  host="localhost",
-  port=3306,
-  user="example", 
-  password="example"
+host="localhost",
+port=3306,
+user="example", 
+password="example"
 ```
 We modify these fields with the MySQL user name and password, we define the port with which it will make the connection, the standard port is 3306, and the host is the IP of the equipment, localhost or 0.0.0.0.0 refer to the OS of itself, if it were in another machine we would have to put another IP.
 
