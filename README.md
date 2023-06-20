@@ -221,7 +221,7 @@ class City(BaseModel):
 ### metodos.py
 Aqui se definen los metodos que realizan mediante un cursor, ejecuta una sentencia SQL, almacena y devuelve una (fetchone) o muchas (fetchall) lineas para imprimirlo en la terminal, hace un commit (Aun no siendo necesario) y luego cierra la conexion con la BD.
 
-´´´
+```
 async def find_by_id(self, city_id):
     db_connection = await get_database()
     try:
@@ -234,8 +234,8 @@ async def find_by_id(self, city_id):
                 return city
     finally:
         db_connection.close()
-´´´
-´´´
+```
+```
 async def create(self, city: City):
     db_connection = await get_database()
     try:
@@ -248,4 +248,4 @@ async def create(self, city: City):
             await db_connection.commit()
     finally:
         db_connection.close()
-´´´
+```
