@@ -1,5 +1,5 @@
 import uvicorn, os
-from FastAPIsql.endpoints import app
+from program.endpoints import app
 
 
 
