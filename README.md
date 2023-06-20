@@ -65,8 +65,6 @@ http://localhost:8000/city/6
 http://localhost:8000/city/countrycode=USA
 ```
 
-## Troubleshooting
-Some problems you may encounter during server execution or with FastAPI requests.
 
 ---
 
@@ -129,10 +127,125 @@ http://localhost:8000/city/6
 http://localhost:8000/city/countrycode=USA
 ```
 
-### Funcionamiento de la API
+## Funcionamiento de la API
 
+### menu.py
+No hace mucho, solo llama a /program/endpoints.py para definir los endpoints de FastAPI ademas de levantar el servidor Uvicorn con una IP y un puerto especificos.
 
+### endpoints.py
+El cuerpo de los endpoints, es la conexion a la BD de MySQL,la variable repositorio que ejecuta el metodo de la clase Repositorio() de metodos.py y ademas almacena la ultima accion realizada y errores de excepcion e integridad de errores.
+- GET
+Si en una peticion GET recibe un codigo de pais (/city?countrycode=ESP), esperara a cities he imprimira el resultado del metodo find_by_type con la variable countrycode.
+Si por el contrario no tiene un codigo de pais (/city), esperara a cities y mostrara el resultado de get_all ubicado en metodos.py
+```
+async def get_city(countrycode: Optional[str] = None):
+    try:
+        if countrycode:
+            print ("Buscando por countrycode: ", countrycode)
+            cities = await repositorio.find_by_type(countrycode)
+        if not countrycode:
+            print("Mostrando la tabla completa.")
+            cities = await repositorio.get_all()
+    ...
+    else:   
+        return cities
+```
+- GET_ID
+Espera a find_by_id con la variable "city_id" que difine la id que va a recibir en repositorio.find_by_id y lo guarda en repositorio. 
+```
+async def get_city(city_id: int):
+    try:
+        city = await repositorio.find_by_id(city_id)
+    ...
+    else:   
+        return city
+```
 
-## Problemas
-Algunos problemas que puedes encontrar durante la ejecucion del servidor o con las peticiones a FastAPI.
+- POST
+Recibe valores segun la estructura de City, espera al metodo create, la ejecuta y lo guarda en repositorio. 
+```
+async def create_city(city: City):
+    repositorio = Repositorio()
+    try:
+        await repositorio.create(city)
+        return {f"{city}": "City created successfully"}
+```
 
+- PUT
+Recibe una id y valores segun la estructura de City, y son procesadas por el metodo "update" y almacenada en repositorio
+```
+async def update_city(city_id: int, city: City):
+    repositorio = Repositorio() 
+    try:
+        await repositorio.update(city_id, city)
+        return {f"{city}": "City updated successfully"}
+```
+
+- DELETE
+Espera al metodo delete que procese el input de usuario como "city_id", lo guarda en repositorio he imprime un mensaje.
+```
+async def delete_city(city_id: int):
+    repositorio = Repositorio()
+    try:
+        await repositorio.delete(city_id)
+        return {f"City with id {city_id}": "City deleted successfully"}
+```
+
+- HTTPexception
+En caso de recibir un error de sintaxis y que no exista, devolvera este error.
+```
+async def http_exception_handler(exc):
+    status_code = exc.status_code
+    detail = str(exc.detail)
+    return JSONResponse(status_code=status_code, content={"Error 404":detail+"| (._.)?"})
+```
+
+### database.py
+Almacena la conexion a la base de datos, los commit son automaticos, por lo que si se envia un "execute" en un cursor es procesado automaticamente por MySQL.
+```
+autocommit=True
+```
+
+### esquema.py
+Contine una clase con la estructura de una fila (izquierda a derecha) y el tipo de valor de cada campo de una tabla de una BD.
+La idea de que sea una clase es de poder añadir mas tablas en forma de funciones y que dependan de la misma clase(auque ahora mismo no tenga ninguna funcion), no es necesario __init__ o self al no haber "datos en común", aunque podria usarse para modificar Foreign Keys si por el contrario fueran comunes y si se utilizaria __init__.
+```
+class City(BaseModel):
+    id: int
+    name: str
+    countryCode: str
+    district: str
+    population: int
+```
+
+### metodos.py
+Aqui se definen los metodos que realizan mediante un cursor, ejecuta una sentencia SQL, almacena y devuelve una (fetchone) o muchas (fetchall) lineas para imprimirlo en la terminal, hace un commit (Aun no siendo necesario) y luego cierra la conexion con la BD.
+
+´´´
+async def find_by_id(self, city_id):
+    db_connection = await get_database()
+    try:
+        async with db_connection.cursor() as cursor:
+            await cursor.execute("SELECT * FROM city WHERE id = %s", (city_id,))
+            result = await cursor.fetchone()
+            
+            if result:
+                city = {"id": result[0],"name": result[1],"countryCode": result[2]}
+                return city
+    finally:
+        db_connection.close()
+´´´
+´´´
+async def create(self, city: City):
+    db_connection = await get_database()
+    try:
+        async with db_connection.cursor() as cursor:
+            await cursor.execute(
+                "INSERT INTO city (ID, Name, CountryCode, District, Population)"
+                "VALUES (%s, %s, %s, %s, %s)",
+                (city.id, city.name, city.countryCode, city.district, city.population)
+                )
+            await db_connection.commit()
+    finally:
+        db_connection.close()
+´´´
