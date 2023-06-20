@@ -85,10 +85,10 @@ Una explicacion sencilla de como utilizarla con la BD de ejemplo "World" de MySQ
 
 Para que el programa funcione es necesario ir ./program/database.py, de la linea 12 al 15.
 ```
-  host="localhost",
-  port=3306,
-  user="example", 
-  password="example"
+host="localhost",
+port=3306,
+user="example", 
+password="example"
 ```
 Modificamos estos campos con el nombre y contraseña de usuario de MySQL, definimos el puerto con el cual hara la conexion, el puerto estandar es el 3306, y el host es la IP del equipo, localhost o 0.0.0.0 hacen referencia al SO de si mismo, si estuviera en otra maquina que habria que poner otra IP.
 
