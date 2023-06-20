@@ -65,7 +65,7 @@ http://localhost:8000/city/6
 http://localhost:8000/city/countrycode=USA
 ```
 
-## Problems
+## Troubleshooting
 Some problems you may encounter during server execution or with FastAPI requests.
 
 ---
