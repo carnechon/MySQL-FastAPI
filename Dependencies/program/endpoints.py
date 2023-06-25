@@ -15,18 +15,28 @@ repositorio = Repositorio()
 
 
 # --------------------------------------------------------------------- GET ---------------------------------------------------------------------------
-#/city
-# /city?countrycode=ESP
 @app.get("/city")
-async def get_city(countrycode: Optional[str] = None):
+async def get_city(countrycode: Optional[str] = None, district: Optional[str] = None):
     try:
-        if countrycode:# Si countrycode si se especifica.
+        if countrycode and district: # /city?countrycode=ESP&district=Madrid
+            print (f"Buscando por countrycode: {countrycode} y District: {district}")
+            cities = await repositorio.find_by_countrycode_and_district(countrycode, district)
+            
+        elif countrycode:# /city?countrycode=ESP
             print ("Buscando por countrycode: ", countrycode)
-            cities = await repositorio.find_by_type(countrycode)
-        if not countrycode: # Si no se especifica el tipo de countrycode.
+            cities = await repositorio.find_by_countrycode(countrycode)
+            
+        elif district:# /city?district=Madrid
+            print ("Buscando por district: ", district)
+            cities = await repositorio.find_by_district(district)
+            
+        elif not countrycode: # Si no se especifica el tipo de countrycode.
             print("Mostrando la tabla completa.")
             cities = await repositorio.get_all()
-    
+        elif not district: # Si no se especifica el tipo de district.
+            print("Mostrando la tabla completa.")
+            cities = await repositorio.get_all()
+            
     except aiomysql.IntegrityError as e:
         error_message = str(e)
         response = Response(content=f"Integrity Error: {error_message}")
