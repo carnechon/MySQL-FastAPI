@@ -51,7 +51,7 @@ url = "http://localhost:8000/city"
 This can also be done using cURL.
 You can modify the example values that are not enclosed in "" quotes for each request.
 ```
-> curl get http://localhost:8000/city ...city
+> curl get http://localhost:8000/city
 > curl -X POST -H "Content-Type: application/json" -d '{"id": 4080, "name": "City Name", "countryCode": "USA", "district": "LosAlamos", "population": 1000}' http://localhost:8000/city
 > curl -X PUT -H "Content-Type: application/json" -d '{"id": 4080, "name": "New City Name", "countryCode": "USA", "district": "LosAlamos2", "population": 3215}' http://localhost:8000/city/4080
 > curl -X DELETE http://localhost:8000/city/4080
@@ -62,7 +62,7 @@ Or just from the browser.
 http://localhost:8000/docs
 http://localhost:8000/city
 http://localhost:8000/city/6
-http://localhost:8000/city/countrycode=USA
+http://localhost:8000/city?countrycode=USA
 ```
 
 
@@ -124,7 +124,7 @@ O simplemete desde el navegador.
 http://localhost:8000/docs
 http://localhost:8000/city
 http://localhost:8000/city/6
-http://localhost:8000/city/countrycode=USA
+http://localhost:8000/city?countrycode=USA
 ```
 
 ## Funcionamiento de la API
