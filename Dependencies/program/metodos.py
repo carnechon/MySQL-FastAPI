@@ -1,9 +1,10 @@
 from program.database import get_database
 from program.esquema import City
+from pydantic import BaseModel
 
 # Aqui se define cada metodo que permitira el programa al interactuar con la BD. Luego en _init_.py se continua.
-class Repositorio:
-    async def get_all(self):
+class Repositorio(BaseModel):
+    async def get_all():
         db_connection = await get_database()
         try:
             async with db_connection.cursor() as cursor:
@@ -13,8 +14,7 @@ class Repositorio:
         finally:
             db_connection.close()
 
-
-    async def find_by_type(self, countrycode_type):
+    async def find_by_countrycode(City, countrycode_type):
         db_connection = await get_database()
         try:
             cursor = await db_connection.cursor()
@@ -24,8 +24,30 @@ class Repositorio:
         finally:
             db_connection.close()
 
+    async def find_by_district(City, district_type):
+        db_connection = await get_database()
+        try:
+            cursor = await db_connection.cursor()
+            await cursor.execute("SELECT * FROM city WHERE district = %s", (district_type,))
+            cities = await cursor.fetchall()
+            return cities
+        finally:
+            db_connection.close()
+    
+    async def find_by_countrycode_and_district(City, countrycode_type, district_type):
+        db_connection = await get_database()
+        try:
+            cursor = await db_connection.cursor()
+            await cursor.execute("SELECT * FROM city WHERE CountryCode = %s AND District = %s", (countrycode_type, district_type,))
+            cities = await cursor.fetchall()
+            for city in cities:
+                print(city)
 
-    async def find_by_id(self, city_id):
+            return cities
+        finally:
+            db_connection.close()
+
+    async def find_by_id(City, city_id):
         db_connection = await get_database()
         try:
             async with db_connection.cursor() as cursor:
@@ -33,13 +55,13 @@ class Repositorio:
                 result = await cursor.fetchone()
                 
                 if result:
-                    city = {"id": result[0],"name": result[1],"countryCode": result[2]}
+                    city = {"id": result[0],"name": result[1],"countryCode": result[2],"district": result[3],"population": result[4]}
                     return city
         finally:
             db_connection.close()
 
 
-    async def create(self, city: City):
+    async def create(City, city: City):
         db_connection = await get_database()
         try:
             async with db_connection.cursor() as cursor:
@@ -54,7 +76,22 @@ class Repositorio:
 
 
 
-    async def update(self, city_id: int, city: City):
+    async def create_without_id(City, city: City):
+        db_connection = await get_database()
+        try:
+            async with db_connection.cursor() as cursor:
+                await cursor.execute(
+                    "INSERT INTO city (ID, Name, CountryCode, District, Population)"
+                    "VALUES (%s, %s, %s, %s, %s)",
+                    (city.id, city.name, city.countryCode, city.district, city.population)
+                    )
+                await db_connection.commit()
+        finally:
+            db_connection.close()
+
+
+
+    async def update(City, city_id: int, city: City):
         db_connection = await get_database()
         try:
             async with db_connection.cursor() as cursor:
@@ -67,7 +104,7 @@ class Repositorio:
             db_connection.close()
 
 
-    async def delete(self, city_id: int):
+    async def delete(City, city_id: int):
         db_connection = await get_database()
         try:
             async with db_connection.cursor() as cursor:
