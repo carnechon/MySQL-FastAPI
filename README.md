@@ -3,7 +3,6 @@
 Final project of the year, using the FastAPI Framework, uvicorn to connect through the desired port and the standard MySQL database "world".
 
 ---
-### Page under construction...
 
 ## Description in English
 This is my last project of this school year in which I have developed with Python an API with the FastAPI framework with a generic MySQL database as a base model for the operation of the code, this code currently only collects the GET, POST, PUT, DELETE functions for a single table, it could be developed to view and display other tables, but this is enough to display and use most of the options that this tool allows for this use. In addition, the database is asynchronous, so it can wait a certain amount of time for requests from the server.
